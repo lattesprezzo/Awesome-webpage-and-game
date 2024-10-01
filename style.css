@@ -1,0 +1,38 @@
+body {
+    background-color: rgb(23, 23, 73);
+}
+
+#middlediv {
+    
+    width: 100vw;
+    height: 100vh;
+    background-color: blueviolet;
+    transition: background-color 1000ms ease-in-out;
+}
+#gameCanvas {
+    margin: 0 auto;
+    width: 100%;
+    height: 100%;
+    border: 2px solid black;
+    background-color: rgb(64, 26, 26);
+}
+
+#middlediv:hover {
+    background-color: blue;
+    transition: background-color 1000ms ease-in-out;
+}
+#middlediv:not(:hover) {
+    background-color: rgb(48, 41, 54);
+    transition: background-color 1000ms ease-in-out;
+}
+button {
+    width: 100px;
+    height: 50px;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    left: 50%;
+    position: absolute;
+}
+button:hover {
+    border: 4px solid red;
+    transition: border 1000ms ease-in-out;
+}
