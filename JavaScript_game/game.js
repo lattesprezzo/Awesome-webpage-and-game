@@ -48,7 +48,7 @@ rainY+=rainSpeed;
 
 }
 
-function drawBullets(startX, extraX, color) {
+function drawRain(startX, extraX, color) {
   ctx.beginPath();
   ctx.rect(startX,rainY,10,10);
   ctx.fillStyle = color;
@@ -61,7 +61,7 @@ function drawBullets(startX, extraX, color) {
       playerXsnapshot = playerX;
   }
   
-  startX = playerXsnapshot; 
+  startX = 50; 
   
   rainY+=rainSpeed;
   
@@ -194,13 +194,18 @@ function updateGame() {
   //ei voi antaa kahta käskyä
  
   do {
-    alpha -= 0.005;
+    alpha -= 0.004;
   }  while (alpha == 1)
-
+    if(alpha <= 0) {
+      alpha = 1;
+    }
+    
 //  drawRain(10, 0.8, `rgba(${playerX},100,50,${alpha})`);
   drawBullets(10, 0.8, "blue");  
    drawBullets(playerXsnapshot, 0.8, "red");
    drawBullets(24, 0.8, "green");
+
+   drawRain(50, 0, `rgba(${playerX},100,50,${alpha})` )
 
   drawAnimatedPlayerImage(playerX, playerY); // Tämä piirtää täyden anim spritesheetin kohta kohdalta
 
