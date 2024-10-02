@@ -3,8 +3,17 @@ import {
     dy,
   } from "./input.js";
 
-let canvas = document.getElementById("gameCanvas"); // Set initial value to canvasMobile
+let canvas = document.getElementById("gameCanvas"); // Set initial value
 let ctx = canvas.getContext("2d");
+
+// Default H and W are 150px x 300px so set custom size here:
+// Max out:
+//canvas.width = window.innerWidth;
+//canvas.height = window.innerHeight;
+
+canvas.width = 300;
+canvas.height = window.innerHeight;
+
 
 const background = new Image();
 background.src = "background.jpg";
@@ -15,62 +24,80 @@ player.src = "player.png";
 const player2 = new Image(); // Create fully animated element
 player2.src = "animations-full.png";
 
-// Dropping object variables
-//let rainX = 0;
-let rainY = 0;
+
+// ..................BULLETS................. //
+
+// Bullet variables
+let bulletY = 0;
 let alpha = 1;
-let rainSpeed = 0.1;
+let bulletSpeed = 0.1;
 let playerXsnapshot = dx;// Start once here. Game update will take care of the following loops
 // and updates the Snapshot to the playerX current value.
 
-function drawPlayer() {
-
-    ctx.drawImage(player,100,0,400,600,playerX, playerY, 120, 100);
-}
-
-function drawBullets(startX, extraX, color) {
+function drawBullets(startX, color) {
 ctx.beginPath();
-ctx.rect(startX,rainY,10,10);
+ctx.rect(startX,bulletY,10,10);
 ctx.fillStyle = color;
 ctx.fill();
 ctx.closePath();
 
 // Start from the top again
-if(rainY >= canvas.height) {
-    rainY = playerY;
+if(bulletY >= canvas.height) {
+    bulletY = playerY;
     playerXsnapshot = playerX;
 }
-
-startX = playerXsnapshot; 
-
-rainY+=rainSpeed;
-//rainX += 0.5;
-
+startX = playerXsnapshot;
+bulletY+=bulletSpeed;
 }
 
-function drawRain(startX, extraX, color) {
-  ctx.beginPath();
-  ctx.rect(startX,rainY,10,10);
-  ctx.fillStyle = color;
-  ctx.fill();
-  ctx.closePath();
-  
-  // Start from the top again
-  if(rainY >= canvas.height) {
-      rainY = playerY;
-      playerXsnapshot = playerX;
-  }
-  
-  startX = 50; 
-  
-  rainY+=rainSpeed;
-  
-  }
+// .............. RAIN .............. //
 
-function drawBackground()
- {
-    ctx.drawImage(background,0,0,200,200);
- }
+
+//const rainStartY = canvas.height;
+// Rain variables
+const rainStartY = 0; // Start from the top
+let rainY = rainStartY;
+let rainSpeed = 0; // Initial speed
+const gravity = 0.4; // Acceleration due to gravity
+let rainalpha = 1; // Initial alpha value
+
+// INFO
+// let alpha; <-- a global variable that will also affect drawBullets
+
+function drawRain(startX, color) {
+  rainalpha = 1 - (rainY / canvas.height); // Calculate alpha based on position
+    ctx.beginPath();
+    ctx.rect(startX, rainY, 2, 30);
+    ctx.fillStyle = `rgba(135, 206, 235, ${rainalpha})`; // Use local alpha
+    ctx.fill();
+    ctx.closePath();
+    
+    // Update speed with acceleration
+    rainSpeed += gravity;
+    
+    // Update position with speed
+    rainY += rainSpeed;
+
+    // Update alpha based on position
+    rainalpha = 1 - (rainY / canvas.height);
+    
+    // Reset position and speed when raindrop reaches the bottom
+    if (rainY >= canvas.height) {
+        rainY = rainStartY;
+        rainSpeed = 0; // Reset speed
+    }
+}
+
+
+
+// INFO
+// Ei käytetä jos on jo määritelty CSS:ssä:
+// function drawBackground()
+//  {
+//     ctx.drawImage(background,0,0,200,200);
+//  }
+ 
+// ............... PLAYER ............... //
 let playerX = 0;
 let playerY = 0;
 let playerWidth = 0;
@@ -181,6 +208,15 @@ function drawAnimatedPlayerImage(x, y) {
   }
 }
 
+// Jos Windowin kokoa muutetaan, päivitetään Height ja logataan ulos tietoa:
+window.addEventListener('resize', function() {
+  canvas.height = window.innerHeight;
+  console.log(canvas.height + " " + canvas.width);
+});
+
+let windowFullHeight = (canvas.height/window.innerHeight)*100; // Normalize canvas height to 100%
+
+
 // Peli pyörii tässä looppina:
 
 function updateGame() {
@@ -192,20 +228,22 @@ function updateGame() {
   //drawBackground(); // voi myös asettaa .css-filessä #gameCanvas
   // Tämä taustapiirto-funktio pitää olla tällöin piilotettu, 
   //ei voi antaa kahta käskyä
- 
-  do {
-    alpha -= 0.004;
-  }  while (alpha == 1)
-    if(alpha <= 0) {
-      alpha = 1;
-    }
+ console.log(windowFullHeight);
+
+// windowFullHeight = alpha;
+//   do {
+//     alpha -= 0.004;
+//   }  while (alpha == 100)
+//     if(alpha <= 0) {
+//       alpha = 100;
+//     }
     
 //  drawRain(10, 0.8, `rgba(${playerX},100,50,${alpha})`);
   drawBullets(10, 0.8, "blue");  
    drawBullets(playerXsnapshot, 0.8, "red");
    drawBullets(24, 0.8, "green");
 
-   drawRain(50, 0, `rgba(${playerX},100,50,${alpha})` )
+   drawRain(50, `rgba(135, 206, 235`)
 
   drawAnimatedPlayerImage(playerX, playerY); // Tämä piirtää täyden anim spritesheetin kohta kohdalta
 
