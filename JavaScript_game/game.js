@@ -1,20 +1,21 @@
 import {
     dx,
     dy,
+    applyFriction
   } from "./input.js";
 
 let canvas = document.getElementById("gameCanvas"); // Set initial value
 let ctx = canvas.getContext("2d");
 
 // Default H and W are 150px x 300px so set custom size here:
+canvas.width = 300;
+canvas.height = 300;
 // Max out:
 //canvas.width = window.innerWidth;
 //canvas.height = window.innerHeight;
 
-canvas.width = 300;
-canvas.height = window.innerHeight;
 
-
+// Object definitions
 const background = new Image();
 background.src = "background.jpg";
 
@@ -23,7 +24,6 @@ player.src = "player.png";
 
 const player2 = new Image(); // Create fully animated element
 player2.src = "animations-full.png";
-
 
 // ..................BULLETS................. //
 
@@ -52,7 +52,6 @@ bulletY+=bulletSpeed;
 
 // .............. RAIN .............. //
 
-
 //const rainStartY = canvas.height;
 // Rain variables
 const rainStartY = 0; // Start from the top
@@ -65,12 +64,12 @@ let rainalpha = 1; // Initial alpha value
 // let alpha; <-- a global variable that will also affect drawBullets
 
 function drawRain(startX, color) {
-  rainalpha = 1 - (rainY / canvas.height); // Calculate alpha based on position
-    ctx.beginPath();
-    ctx.rect(startX, rainY, 2, 30);
-    ctx.fillStyle = `rgba(135, 206, 235, ${rainalpha})`; // Use local alpha
-    ctx.fill();
-    ctx.closePath();
+  let rainalpha = 1 - (rainY / canvas.height); // Calculate alpha based on position
+  ctx.beginPath();
+  ctx.rect(startX, rainY, 2, 30);
+  ctx.fillStyle = `rgba(135, 206, 235, ${rainalpha})`; // Use local alpha
+  ctx.fill();
+  ctx.closePath();
     
     // Update speed with acceleration
     rainSpeed += gravity;
@@ -87,8 +86,6 @@ function drawRain(startX, color) {
         rainSpeed = 0; // Reset speed
     }
 }
-
-
 
 // INFO
 // Ei käytetä jos on jo määritelty CSS:ssä:
@@ -210,25 +207,35 @@ function drawAnimatedPlayerImage(x, y) {
 
 // Jos Windowin kokoa muutetaan, päivitetään Height ja logataan ulos tietoa:
 window.addEventListener('resize', function() {
-  canvas.height = window.innerHeight;
+  //canvas.height = window.innerHeight;
   console.log(canvas.height + " " + canvas.width);
 });
 
 let windowFullHeight = (canvas.height/window.innerHeight)*100; // Normalize canvas height to 100%
-
 
 // Peli pyörii tässä looppina:
 
 function updateGame() {
   ctx.clearRect(0, 0, canvas.width, canvas.height); // Puhdista koko canvas
 
-  playerX += dx; // Liikuttavat pelaajaa antamalla sille uusia arvoja input:in kautta
-  playerY += dy;
+// Apply friction for gradual deceleration
+console.log("dx: " + dx + " " + "dy: " + dy);
+// Apply friction for gradual deceleration
+applyFriction();
 
+playerX += dx; // Liikuttavat pelaajaa antamalla sille uusia arvoja input:in kautta
+playerY += dy;
+//
   //drawBackground(); // voi myös asettaa .css-filessä #gameCanvas
   // Tämä taustapiirto-funktio pitää olla tällöin piilotettu, 
   //ei voi antaa kahta käskyä
  console.log(windowFullHeight);
+
+ // Boundary checks
+ if (playerX < 0) playerX = 0;
+ if (playerX + playerWidth > canvas.width) playerX = canvas.width - playerWidth;
+ if (playerY < 0) playerY = 0;
+ if (playerY + playerHeight > canvas.height) playerY = canvas.height - playerHeight;
 
 // windowFullHeight = alpha;
 //   do {
@@ -239,11 +246,11 @@ function updateGame() {
 //     }
     
 //  drawRain(10, 0.8, `rgba(${playerX},100,50,${alpha})`);
-  drawBullets(10, 0.8, "blue");  
-   drawBullets(playerXsnapshot, 0.8, "red");
-   drawBullets(24, 0.8, "green");
+drawBullets(10, "rgba(0, 0, 255, 0.8)"); // Blue bullets with fixed alpha
+drawBullets(playerXsnapshot, "rgba(255, 0, 0, 0.8)"); // Red bullets with fixed alpha
+drawBullets(24, "rgba(0, 255, 0, 0.8)"); // Green bullets with fixed alpha
 
-   drawRain(50, `rgba(135, 206, 235`)
+drawRain(50, `rgba(135, 206, 235)`); // Rain with dynamic alpha
 
   drawAnimatedPlayerImage(playerX, playerY); // Tämä piirtää täyden anim spritesheetin kohta kohdalta
 
