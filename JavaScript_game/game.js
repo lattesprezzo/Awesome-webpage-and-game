@@ -1,8 +1,9 @@
 import {
-    dx,
-    dy,
+ dx, dy,
     applyFriction
   } from "./input.js";
+
+  import { playerWidth, playerHeight, playerPosition, drawAnimatedPlayerImage } from './player.js';
 
 let canvas = document.getElementById("gameCanvas"); // Set initial value
 let ctx = canvas.getContext("2d");
@@ -19,20 +20,20 @@ canvas.height = 400;
 const background = new Image();
 background.src = "background.jpg";
 
-const player = new Image();
-player.src = "player.png";
+// const player = new Image();
+// player.src = "player.png";
 
-const player2 = new Image(); // Create fully animated element
-player2.src = "animations-full.png";
+const player = new Image(); // Create fully animated element
+player.src = "animations-full.png";
 
 // ..................BULLETS................. //
 
 // Bullet variables
 let bulletY = 0;
 let alpha = 1;
-let bulletSpeed = 0.1;
-let playerXsnapshot = dx;// Start once here. Game update will take care of the following loops
-// and updates the Snapshot to the playerX current value.
+let bulletSpeed = 2;
+let playerXsnapshot = playerPosition.x;// Start once here. Game update will take care of the following loops
+// and updates the Snapshot to the playerPosition.x current value.
 
 function drawBullets(startX, color) {
 ctx.beginPath();
@@ -43,8 +44,9 @@ ctx.closePath();
 
 // Start from the top again
 if(bulletY >= canvas.height) {
-    bulletY = playerY;
-    playerXsnapshot = playerX;
+    bulletY = playerPosition.y;
+    playerXsnapshot = playerPosition.x;
+    
 }
 startX = playerXsnapshot;
 bulletY+=bulletSpeed;
@@ -94,13 +96,7 @@ function drawRain(startX, color) {
 //     ctx.drawImage(background,0,0,200,200);
 //  }
  
-// ............... PLAYER ............... //
-let playerX = 0;
-let playerY = 0;
-let playerWidth = 0;
-let playerHeight = 0;
-let startFrameIndex = 0;
-let timer = 0;
+
 
 // Player animation spritesheet control:
 
@@ -114,7 +110,7 @@ const coordinatesInfo = document.querySelector(".coordinatesinfo p");
 // Create game object images
 function drawStaticPlayerImage() {
   // INFO: Clear the drawn image in one frame using the area defined with parameters:
-  ctx.clearRect(playerX, playerY, playerWidth, playerHeight);
+  ctx.clearRect(playerPosition.x, playerPosition.y, playerWidth, playerHeight);
   //playerWidth = 120 + playerExtraWidth; INFO: For the idle animation
   playerWidth = 270;
   playerHeight = 90;
@@ -122,7 +118,7 @@ function drawStaticPlayerImage() {
   //INFO: Show the player coordinates in the element below the game canvas
   coordinatesInfo.textContent = ` Player location: x: ${Math.round(
     playerX
-  )} y: ${Math.round(playerY)}`;
+  )} y: ${Math.round(playerPosition.y)}`;
 
   // WARNING: Objects stack up on each other, thus the BG-image must be drawn first.
   // Otherwise the first image will cover everything.
@@ -130,7 +126,7 @@ function drawStaticPlayerImage() {
   // ctx.drawImage(background-image);
   // ctx.drawImage(player);
   // ctx.drawImage(smoke-in-front);
-  ctx.drawImage(player, playerX, playerY, playerWidth, playerHeight); //INFO: Parameters: Image to draw, x- and y-coordinates, width and height
+  ctx.drawImage(player, playerPosition.x, playerPosition.y, playerWidth, playerHeight); //INFO: Parameters: Image to draw, x- and y-coordinates, width and height
 
   // Create animation on the lower Player:
   timer++;
@@ -148,62 +144,62 @@ function drawStaticPlayerImage() {
     0,
     90,
     90,
-    playerX,
-    playerY + 100,
+    playerPosition.x,
+    playerPosition.y + 100,
     90,
     playerHeight
   );
 
 }
-const player2StartFramesX = [0, 90, 180];
-const player2StartFramesY = [0, 90, 180, 270, 360];
-function drawAnimatedPlayerImage(x, y) {
-  // INFO: Clear the drawn image in one frame using the area defined with parameters:
-  ctx.clearRect(x, y, playerWidth, playerHeight);
+// const player2StartFramesX = [0, 90, 180];
+// const player2StartFramesY = [0, 90, 180, 270, 360];
+// function drawAnimatedPlayerImage(x, y) {
+//   // INFO: Clear the drawn image in one frame using the area defined with parameters:
+//   ctx.clearRect(x, y, playerWidth, playerHeight);
 
-  playerWidth = 60;
-  playerHeight = 60;
-  let yIndex;
-  switch (true) {
-    case dy < 0:
-      yIndex = 1;
-      break;
-    case dy > 0:
-      yIndex = 2;
-      break;
-    case dx < 0:
-      yIndex = 3; // Left animation
-      break;
-    case dx > 0:
-      yIndex = 4; // Right animation
-      break;
-    default:
-      yIndex = 0; // Default animation (no movement)
-      break;
-  }
-  ctx.drawImage(
-    player2,
-    player2StartFramesX[startFrameIndex],
-    player2StartFramesY[yIndex],
-    90,
-    90,
-    x,
-    y,
-    playerWidth,
-    playerHeight
-  );
+//   playerWidth = 60;
+//   playerHeight = 60;
+//   let yIndex;
+//   switch (true) {
+//     case dy < 0:
+//       yIndex = 1;
+//       break;
+//     case dy > 0:
+//       yIndex = 2;
+//       break;
+//     case dx < 0:
+//       yIndex = 3; // Left animation
+//       break;
+//     case dx > 0:
+//       yIndex = 4; // Right animation
+//       break;
+//     default:
+//       yIndex = 0; // Default animation (no movement)
+//       break;
+//   }
+//   ctx.drawImage(
+//     player2,
+//     player2StartFramesX[startFrameIndex],
+//     player2StartFramesY[yIndex],
+//     90,
+//     90,
+//     x,
+//     y,
+//     playerWidth,
+//     playerHeight
+//   );
 
-  // Create animation on the lower Player:
-  timer++;
-  if (timer >= 30) {
-    timer = 0;
-    startFrameIndex++;
-  }
+//   // Create animation on the lower Player:
+//   timer++;
+//   if (timer >= 30) {
+//     timer = 0;
+//     startFrameIndex++;
+//   }
 
-  if (startFrameIndex == 3) {
-    startFrameIndex = 0;
-  }
-}
+//   if (startFrameIndex == 3) {
+//     startFrameIndex = 0;
+//   }
+// }
 
 // Jos Windowin kokoa muutetaan, päivitetään Height + Width ja logataan ulos tietoa:
 window.addEventListener('resize', function() {
@@ -224,8 +220,8 @@ function updateGame() {
 // Apply friction for gradual deceleration
 applyFriction();
 
-playerX += dx; // Liikuttavat pelaajaa antamalla sille uusia arvoja input:in kautta
-playerY += dy;
+playerPosition.x += dx; // Liikuttavat pelaajaa antamalla sille uusia arvoja input:in kautta
+playerPosition.y += dy;
 //
   //drawBackground(); // voi myös asettaa .css-filessä #gameCanvas
   // Tämä taustapiirto-funktio pitää olla tällöin piilotettu, 
@@ -234,10 +230,10 @@ playerY += dy;
  //console.log(windowFullHeight);
 
  // Boundary checks
- if (playerX < 0) playerX = 0;
- if (playerX + playerWidth > canvas.width) playerX = canvas.width - playerWidth;
- if (playerY < 0) playerY = 0;
- if (playerY + playerHeight > canvas.height) playerY = canvas.height - playerHeight;
+ if (playerPosition.x < 0) playerPosition.x = 0;
+ if (playerPosition.x + playerWidth > canvas.width) playerPosition.x = canvas.width - playerWidth;
+ if (playerPosition.y < 0) playerPosition.y = 0;
+ if (playerPosition.y + playerHeight > canvas.height) playerPosition.y = canvas.height - playerHeight;
 
 // windowFullHeight = alpha;
 //   do {
@@ -247,14 +243,16 @@ playerY += dy;
 //       alpha = 100;
 //     }
     
-//  drawRain(10, 0.8, `rgba(${playerX},100,50,${alpha})`);
+drawRain(10, 0.8, `rgba(${playerPosition.x},100,50,${alpha})`);
+
 drawBullets(10, "rgba(0, 0, 255, 0.8)"); // Blue bullets with fixed alpha
-drawBullets(playerXsnapshot, "rgba(255, 0, 0, 0.8)"); // Red bullets with fixed alpha
-drawBullets(24, "rgba(0, 255, 0, 0.8)"); // Green bullets with fixed alpha
+
+//drawBullets(playerXsnapshot, "rgba(255, 0, 0, 0.8)"); // Red bullets with fixed alpha
+//drawBullets(playerXsnapshot, "rgba(0, 255, 0, 0.8)"); // Green bullets with fixed alpha
 
 //drawRain(50, `rgba(135, 206, 235)`); // Rain with dynamic alpha
 
-  drawAnimatedPlayerImage(playerX, playerY); // Tämä piirtää täyden anim spritesheetin kohta kohdalta
+  drawAnimatedPlayerImage(playerPosition.x, playerPosition.y); // Tämä piirtää täyden anim spritesheetin kohta kohdalta
 
   requestAnimationFrame(updateGame);
 }
