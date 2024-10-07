@@ -8,8 +8,8 @@ let canvas = document.getElementById("gameCanvas"); // Set initial value
 let ctx = canvas.getContext("2d");
 
 // Default H and W are 150px x 300px so set custom size here:
-canvas.width = 300;
-canvas.height = 300;
+canvas.width = 500;
+canvas.height = 400;
 // Max out:
 //canvas.width = window.innerWidth;
 //canvas.height = window.innerHeight;
@@ -161,8 +161,8 @@ function drawAnimatedPlayerImage(x, y) {
   // INFO: Clear the drawn image in one frame using the area defined with parameters:
   ctx.clearRect(x, y, playerWidth, playerHeight);
 
-  playerWidth = 30;
-  playerHeight = 30;
+  playerWidth = 60;
+  playerHeight = 60;
   let yIndex;
   switch (true) {
     case dy < 0:
@@ -205,21 +205,22 @@ function drawAnimatedPlayerImage(x, y) {
   }
 }
 
-// Jos Windowin kokoa muutetaan, päivitetään Height ja logataan ulos tietoa:
+// Jos Windowin kokoa muutetaan, päivitetään Height + Width ja logataan ulos tietoa:
 window.addEventListener('resize', function() {
-  //canvas.height = window.innerHeight;
-  console.log(canvas.height + " " + canvas.width);
+  //canvas.height = window.innerHeight * 0.6;
+ // canvas.width = window.innerWidth * 0.6;
+  console.log("Windows resized. New dimensions: " + "H: " + canvas.height + " X: " + canvas.width);
 });
 
 let windowFullHeight = (canvas.height/window.innerHeight)*100; // Normalize canvas height to 100%
 
-// Peli pyörii tässä looppina:
+// ......... Game loop .......... //
 
 function updateGame() {
   ctx.clearRect(0, 0, canvas.width, canvas.height); // Puhdista koko canvas
 
 // Apply friction for gradual deceleration
-console.log("dx: " + dx + " " + "dy: " + dy);
+//console.log("dx: " + dx + " " + "dy: " + dy);
 // Apply friction for gradual deceleration
 applyFriction();
 
@@ -229,7 +230,8 @@ playerY += dy;
   //drawBackground(); // voi myös asettaa .css-filessä #gameCanvas
   // Tämä taustapiirto-funktio pitää olla tällöin piilotettu, 
   //ei voi antaa kahta käskyä
- console.log(windowFullHeight);
+
+ //console.log(windowFullHeight);
 
  // Boundary checks
  if (playerX < 0) playerX = 0;
@@ -250,7 +252,7 @@ drawBullets(10, "rgba(0, 0, 255, 0.8)"); // Blue bullets with fixed alpha
 drawBullets(playerXsnapshot, "rgba(255, 0, 0, 0.8)"); // Red bullets with fixed alpha
 drawBullets(24, "rgba(0, 255, 0, 0.8)"); // Green bullets with fixed alpha
 
-drawRain(50, `rgba(135, 206, 235)`); // Rain with dynamic alpha
+//drawRain(50, `rgba(135, 206, 235)`); // Rain with dynamic alpha
 
   drawAnimatedPlayerImage(playerX, playerY); // Tämä piirtää täyden anim spritesheetin kohta kohdalta
 
