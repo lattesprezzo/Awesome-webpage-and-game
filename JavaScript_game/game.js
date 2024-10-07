@@ -3,7 +3,7 @@ import {
     applyFriction
   } from "./input.js";
 
-  import { playerWidth, playerHeight, playerPosition, drawAnimatedPlayerImage } from './player.js';
+  import { playerWidth, playerHeight, playerPosition, drawAnimatedPlayerImage } from './guy.js';
 
 let canvas = document.getElementById("gameCanvas"); // Set initial value
 let ctx = canvas.getContext("2d");
