@@ -5,8 +5,8 @@ export { handleKeyUp, handleKeyDown, applyFriction };
 
 // Set the acceleration and maximum speed of the player
 export const acceleration = 0.8;
-export const maxSpeed = 2;
-export let friction = 1; // Friction factor for gradual deceleration
+export const maxSpeed = 0.8;
+export let friction = 0.8; // Friction factor for gradual deceleration
 
 
 // Function to handle keydown events
@@ -49,7 +49,7 @@ function handleKeyUp(event) {
     event.key === "ArrowRight"
   ) {
 
-    friction = 0.75; // Apply friction when a key is released
+    friction = 0; // Apply friction when a key is released (zero out)
     }
   }
 

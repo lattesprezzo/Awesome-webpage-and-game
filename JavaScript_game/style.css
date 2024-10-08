@@ -6,6 +6,10 @@ body, html {
     overflow: hidden;
     background-color: rgb(23, 23, 73);
 }
+body {
+    display: none;
+}
+
 
 #middlediv {
     width : inherit;
@@ -15,16 +19,16 @@ body, html {
 }
 
 #gameCanvas {
-    display: block;
+    display: none;
     margin: 0 auto;
-    width: 100%;
-    height: 100%;
+    width: 1200px;
+    height: 950px;
     border: 5px solid black;
     /* background-color: rgb(64, 26, 26); */
     /*Backgroundissa voi olla useampia layereita: */
     background: linear-gradient(
-         rgba(255, 4, 4, 0.5), rgba(255, 0, 242, 0.9))
-    , url(background.jpg);
+         rgba(243, 243, 243, 0), rgba(78, 94, 236, 0))
+    , url(/images/background-images/forest.jpeg);
 }
 
 #middlediv:hover {
