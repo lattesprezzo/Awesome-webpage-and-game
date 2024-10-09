@@ -17,8 +17,8 @@ canvas.height = 400;
 
 
 // Object definitions
-const background = new Image();
-background.src = "background.jpg";
+//const background = new Image();
+//background.src = "background.jpg";
 
 // const player = new Image();
 // player.src = "player.png";
@@ -243,9 +243,9 @@ playerPosition.y += dy;
 //       alpha = 100;
 //     }
     
-drawRain(10, 0.8, `rgba(${playerPosition.x},100,50,${alpha})`);
+//drawRain(10, 0.8, `rgba(${playerPosition.x},100,50,${alpha})`);
 
-drawBullets(10, "rgba(0, 0, 255, 0.8)"); // Blue bullets with fixed alpha
+//drawBullets(10, "rgba(0, 0, 255, 0.8)"); // Blue bullets with fixed alpha
 
 //drawBullets(playerXsnapshot, "rgba(255, 0, 0, 0.8)"); // Red bullets with fixed alpha
 //drawBullets(playerXsnapshot, "rgba(0, 255, 0, 0.8)"); // Green bullets with fixed alpha

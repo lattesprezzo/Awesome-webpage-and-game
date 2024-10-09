@@ -13,6 +13,7 @@ const player = new Image();
 player.src = "animations-full.png";
 
 // ............... PLAYER ............... //
+
 let playerWidth = 0;
 let playerHeight = 0;
 let startFrameIndex = 0;

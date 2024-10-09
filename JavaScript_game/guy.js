@@ -4,16 +4,17 @@ import {
   dx, dy
 } from "./input.js";
 
-
-const playerStartFramesX = [0, 100, 200, 300, 400, 500, 600, 700, 800, 900];
+const playerStartFramesXRight = [0, 100, 200, 310, 400, 500, 600, 700, 800, 900];
+const playerStartFramesXLeft = [900, 800, 700, 600, 500, 400, 300, 200, 100, 0];
 const playerStartFramesY = [0];
 const frameAmount = 10;
 let isMoving = false;
 let lookingLeft = true;
+
 const guyAnimationList = {
-  walkLeft: "/images/guy-walk-left.png",
-  walkRight: "/images/guy-walk-right.png",
-  idleLeft: "/images/guy-idle-left.png"
+  walkLeft: "/images/animations/guy-walk-left.png",
+  walkRight: "/images/animations/guy-walk-right.png",
+  idleLeft: "/images/animations/guy-idle-left.png"
 };
 
 let canvas = document.getElementById("gameCanvas"); // Set initial value
@@ -22,28 +23,32 @@ let ctx = canvas.getContext("2d");
 const player = new Image();
 player.src = guyAnimationList.idleLeft;
 
-// ............... PLAYER ............... //
 let playerWidth = 100;
-let playerHeight = 191;
+let playerHeight = 192;
 let startFrameIndex = 0;
 let timer = 0;
 
+// Player startposition
 const playerPosition = {
-  x: 0,
+  x: canvas.width,
   y: 0
 };
 
+function frameControl(lookingLeft) {
+  return lookingLeft ? playerStartFramesXLeft : playerStartFramesXRight;
+}
+
 function controlPlayerX(positionX) {
-  if(!isMoving) {
-  if (lookingLeft) {
-    return positionX;
-  } else {
-    return -positionX-player.width/2; // Otherwise it translates the player too far from the current x-position
+  if (!isMoving) {
+    if (lookingLeft) {
+      return positionX;
+    } else {
+      return -positionX - player.width / 1.8; // Otherwise it translates the player too far from the current x-position
+    }
   }
-}
-else {
-  return positionX;
-}
+  else {
+    return positionX;
+  }
 
 }
 function drawAnimatedPlayerImage(x, y) {
@@ -56,13 +61,14 @@ function drawAnimatedPlayerImage(x, y) {
   let yIndex;
 
   switch (true) {
-    case dx < -0.01:
+    case dx < -0.01: // It might be never exactly zero
       console.log("left" + "dx: " + dx);
       lookingLeft = true;
       isMoving = true;
       yIndex = 0; // Left animation
       if (player.src !== guyAnimationList.walkLeft) {
         player.src = guyAnimationList.walkLeft;
+        console.log("Left animation list: " + player.src);
       }
       break;
     case dx > 0.01:
@@ -72,40 +78,41 @@ function drawAnimatedPlayerImage(x, y) {
       yIndex = 0; // Right animation
       if (player.src !== guyAnimationList.walkRight) {
         player.src = guyAnimationList.walkRight;
+        console.log("Right animation list: " + player.src);
       }
       break;
     default:
       console.log("idle!" + "dx: " + dx + " lookingLeft = " + lookingLeft);
       isMoving = false;
-      x
+      
       yIndex = 0; // Default animation (no movement)
       startFrameIndex = 0;
       if (player.src !== guyAnimationList.idleLeft) {
         player.src = guyAnimationList.idleLeft;
       }
-
       break;
   }
 
   ctx.save();
-  if(!isMoving) {
-  if (lookingLeft) {
-    ctx.scale(1, 1);
+  if (!isMoving) {
+    if (lookingLeft) {
+      ctx.scale(1, 1);
+    }
+    else {
+      ctx.scale(-1, 1);// Flip horizontally
+    }
   }
-  else {
-    ctx.scale(-1, 1);// Flip horizontally
-  }
-}
 
   //ctx.translate(-canvas.width, 0); // Adjust for flipped image
   ctx.drawImage(
     player,
-    playerStartFramesX[startFrameIndex],
+    frameControl()[startFrameIndex],
+    //playerStartFramesXRight[startFrameIndex],
     playerStartFramesY[yIndex],
-    100,
-    191,
+    95,
+    192,
     controlPlayerX(x),
-    300,
+    276,
     playerWidth,
     playerHeight
   );
