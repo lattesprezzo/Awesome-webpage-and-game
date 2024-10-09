@@ -14,11 +14,13 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 window.addEventListener('load', function() {
     var gameCanvas = document.getElementById('gameCanvas');
+    var ufocanvas = this.document.getElementById('ufoCanvas');
     var bgImage = new Image();
     bgImage.src ='/images/background-images/forest.jpeg'; 
 
     bgImage.onload = function() {
         gameCanvas.style.width = bgImage.width + 'px';
         gameCanvas.style.height = bgImage.height + 'px';
+        ufocanvas.style.width = bgImage.width + 'px';
     };
 });

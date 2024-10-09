@@ -55,34 +55,34 @@ function drawAnimatedPlayerImage(x, y) {
   // INFO: Clear the drawn image in one frame using the area defined with parameters:
   ctx.clearRect(x, y, playerWidth, playerHeight);
 
-  playerWidth = 60;
-  playerHeight = 60;
+  playerWidth = 55;
+  playerHeight = 65;
 
   let yIndex;
 
   switch (true) {
     case dx < -0.01: // It might be never exactly zero
-      console.log("left" + "dx: " + dx);
+
       lookingLeft = true;
       isMoving = true;
       yIndex = 0; // Left animation
       if (player.src !== guyAnimationList.walkLeft) {
         player.src = guyAnimationList.walkLeft;
-        console.log("Left animation list: " + player.src);
+      
       }
       break;
     case dx > 0.01:
-      console.log("right" + "dx: " + dx);
+
       lookingLeft = false;
       isMoving = true;
       yIndex = 0; // Right animation
       if (player.src !== guyAnimationList.walkRight) {
         player.src = guyAnimationList.walkRight;
-        console.log("Right animation list: " + player.src);
+
       }
       break;
     default:
-      console.log("idle!" + "dx: " + dx + " lookingLeft = " + lookingLeft);
+
       isMoving = false;
       
       yIndex = 0; // Default animation (no movement)
@@ -112,7 +112,7 @@ function drawAnimatedPlayerImage(x, y) {
     95,
     192,
     controlPlayerX(x),
-    276,
+    271,
     playerWidth,
     playerHeight
   );

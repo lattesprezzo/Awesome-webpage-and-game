@@ -1,5 +1,5 @@
-let canvas = document.getElementById("gameCanvas"); // Set initial value to canvasMobile
-let ctx = canvas.getContext("2d");
+let ufocanvas = document.getElementById("gameCanvas"); // Set initial value to canvasMobile
+let ctx = ufocanvas.getContext("2d");
 
 const player = new Image();
 player.src = "player.png";
@@ -29,7 +29,7 @@ ctx.fillStyle = "blue";
 ctx.fill();
 ctx.closePath();
 
-if(rainY == canvas.height) {
+if(rainY == ufocanvas.height) {
     rainY = 0;
 }
 rainY++;
@@ -39,7 +39,7 @@ rainX += 0.1;
 
 
 function updateGame() {
-  ctx.clearRect(0, 0, canvas.width, 60); // Puhdista koko canvas
+  ctx.clearRect(0, 0, ufocanvas.width, 60); // Puhdista koko canvas
   drawPlayer();
   drawRain();
   requestAnimationFrame(updateGame);
