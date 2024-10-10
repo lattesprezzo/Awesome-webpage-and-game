@@ -4,7 +4,7 @@ body, html {
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  background-color: rgb(23, 23, 73);
+ 
   display: flex;
   align-items: center;
   justify-content: center;
@@ -32,7 +32,7 @@ body, html {
   height: 400px; /* set the desired height */
   border: 3px solid black;
   /* background-color: rgba(133, 11, 11, 0.5); */
-  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(12, 13, 28, 0.4)), url(/images/background-images/forest.jpeg);
+  background: linear-gradient(rgba(0, 0, 0, 0), rgba(12, 13, 28, 0)), url(/images/background-images/forest.jpeg);
 }
 
 #ufoCanvas {
@@ -46,25 +46,25 @@ body, html {
   transform: translateX(-50%);
 }
 #frontCanvas {
-  width: 1024px;
-  height: 1024px;
-  /* background-color: rgba(133, 11, 11, 0.5); */
-  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(12, 13, 28, 0.4)), url(/images/background-images/trees-front.png);
-  z-index: 4;
-  position: absolute;
-  top: 0; /* keep it at the top */
-  left: 50%;
-  transform: translateX(-50%);
-  border: 5px solid rgb(255, 0, 0);
+	width: 1024px;
+	height: 1024px;
+	/* background-color: rgba(133, 11, 11, 0.5); */
+	background: linear-gradient(rgba(0, 0, 0, 0), rgba(12, 13, 28, 0)), url(/images/background-images/trees-front.png);
+	z-index: 4;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	border: 5px solid rgb(255, 0, 0);
 }
 #middlediv:hover {
-  background-color: rgb(28, 47, 85);
-  transition: background-color 1000ms ease-in-out;
+  background: linear-gradient(rgb(25, 47, 155), rgb(57, 57, 109));
+  transition: background-color 2000ms ease-in-out;
 }
 
 #middlediv:not(:hover) {
-  background-color: rgb(12, 12, 39);
-  transition: background-color 1000ms ease-in-out;
+  background: linear-gradient(rgb(25, 47, 155), rgb(11, 11, 31));
+  transition: background-color 2000ms ease-in-out;
 }
 
 button {
