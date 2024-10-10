@@ -50,8 +50,21 @@ function controlPlayerX(positionX) {
   else {
     return positionX;
   }
-
 }
+
+function drawWithShadow(x) {
+  const screenWidth = canvas.width;
+  const leftMargin = 40; // Margin for the left side
+  const rightMargin = 120; // Margin for the right side
+
+  if (x < leftMargin || x > screenWidth - rightMargin) {
+    ctx.filter = 'brightness(0.3)'; // Apply shadow effect
+  } else {
+    ctx.filter = 'none'; // Remove shadow effect
+  }
+}
+
+
 function drawAnimatedPlayerImage(x, y) {
   // INFO: Clear the drawn image in one frame using the area defined with parameters:
   ctx.clearRect(x, y, playerWidth, playerHeight);
@@ -95,6 +108,9 @@ function drawAnimatedPlayerImage(x, y) {
   }
 
   ctx.save();
+
+  drawWithShadow(x);
+
   if (!isMoving) {
     if (lookingLeft) {
       ctx.scale(1, 1);
