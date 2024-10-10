@@ -15,6 +15,7 @@ let ufoPosition = {
   x: 20,
   y: 20
 };
+
 let ufoSpeed = 0.5; // Speed of movement
 let movingRight = true;
 

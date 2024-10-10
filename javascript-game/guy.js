@@ -8,6 +8,7 @@ const playerStartFramesXRight = [0, 100, 200, 310, 400, 500, 600, 700, 800, 900]
 const playerStartFramesXLeft = [900, 800, 700, 600, 500, 400, 300, 200, 100, 0];
 const playerStartFramesY = [0];
 const frameAmount = 10;
+const animationSpeed = 6;
 let isMoving = false;
 let lookingLeft = true;
 
@@ -123,7 +124,7 @@ function drawAnimatedPlayerImage(x, y) {
   // (since it's a mirror image of walking right)
   if (isMoving) {
     timer++;
-    if (timer >= 10) {
+    if (timer >= animationSpeed) {
       timer = 0;
       if (lookingLeft) {
         startFrameIndex--;
@@ -138,15 +139,4 @@ function drawAnimatedPlayerImage(x, y) {
       }
     }
   }
-
-  // if (isMoving) {
-  //   timer++;
-  //   if (timer >= 10) {
-  //     timer = 0;
-  //     startFrameIndex++;
-  //   }
-  //   if (startFrameIndex === frameAmount) {
-  //     startFrameIndex = 0;
-  //   }
-  // }
 }

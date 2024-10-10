@@ -4,8 +4,8 @@ export let dy = 0;
 export { handleKeyUp, handleKeyDown, applyFriction };
 
 // Set the acceleration and maximum speed of the player
-export const acceleration = 0.8;
-export const maxSpeed = 0.8;
+export const acceleration = 0.9;
+export const maxSpeed = 1.2;
 export let friction = 0.8; // Friction factor for gradual deceleration
 
 
