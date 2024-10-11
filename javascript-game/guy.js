@@ -1,5 +1,5 @@
 
-export { playerWidth, playerHeight, playerPosition, drawAnimatedPlayerImage };
+export { playerWidth, playerHeight, playerPosition, drawAnimatedPlayerImage, drawMoonwalker, isMoonwalkerDancing };
 import {
   dx, dy
 } from "./input.js";
@@ -38,7 +38,7 @@ player.src = guyAnimationList.idleLeft;
 // Moonwalker
 const moonWalker = new Image();
 moonWalker.src = "/images/animations/moonwalker-spritesheet.png";
-let isMoonwalkerDancing = false; // Flag to check if GIF should play
+let isMoonwalkerDancing = false;
 let playerWidth = 100;
 let playerHeight = 192;
 const playerColliderWidth = 20;
@@ -75,6 +75,7 @@ function controlPlayerX(positionX) {
 function controlPlayerY() {
   let uforeach = ufoPosition.y;
   if (hasBeenAbducted) {
+
     if (playerPosition.y > uforeach) {
       playerPosition.y -= 2.5; // Decrease y-position to make the player move up
       return playerPosition.y;
@@ -89,9 +90,7 @@ function controlPlayerY() {
       return playerPosition.y;
     }
   }
-
   else {
-
     return 271;
   }
 }
@@ -154,7 +153,6 @@ function drawMoonwalker(x, y) {
     moonwalkerFrameIndex = 0;
   }
 }
-
 
 function drawAnimatedPlayerImage(x, y) {
   // INFO: Clear the drawn image in one frame using the area defined with parameters:
@@ -221,10 +219,10 @@ function drawAnimatedPlayerImage(x, y) {
   }
 
   //ctx.translate(-canvas.width, 0); // Adjust for flipped image
-  if (!isMoonwalkerDancing) {
-drawMoonwalker(x, y);
-  }
-  else {
+//   if (isMoonwalkerDancing) {
+// drawMoonwalker(x, y);
+//   }
+//   else {
     ctx.drawImage(
       player,
       frameControl()[startFrameIndex],
@@ -237,9 +235,7 @@ drawMoonwalker(x, y);
       playerWidth,
       playerHeight
     );
-  }  
-
-
+ // }  
 
   ctx.restore(); // Restore the state
   // Loop animation frames

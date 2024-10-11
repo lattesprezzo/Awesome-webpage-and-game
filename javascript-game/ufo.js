@@ -1,6 +1,7 @@
 
 export { beamCenter, ufoPosition, isShootingBeam, canAbduct };
 
+import { isMoonwalkerDancing } from "./guy.js"
 // Create and initialize the canvas
 let ufocanvas = document.getElementById("ufoCanvas");
 let gamecanvas = document.getElementById("gameCanvas");
@@ -25,6 +26,7 @@ let movingRight = true;
 
 // Function to draw the U.F.O. on the canvas
 function drawUfo() {
+
   ctx.clearRect(0, 0, ufocanvas.width, ufocanvas.height); // Clear the entire frame
 
   // Save the context state
@@ -63,19 +65,22 @@ function drawUfo() {
 }
 
 function getRandomInterval(min, max) {
-  isShootingBeam = true;
+ 
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
 // Abduction beam
-let beamWidth = 40;
+let beamWidth = 28;
 let ufoBeamStartX;
 let beamCenter;
 let beamInterval;
 let isShootingBeam = false;
 let canAbduct; // When the beam is touching ground
-
+let beamAbductionTime = 30; // The time the abduction is possible
+let timer = 0;
 function drawAbductionBeam(ctx, startX, startY, width, canvasHeight) {
+
+  
   ctx.fillStyle = "rgba(255, 255, 0, 0.5)"; // Yellow with 50% opacity
 
   // Initialize the starting height of the beam
@@ -86,7 +91,7 @@ function drawAbductionBeam(ctx, startX, startY, width, canvasHeight) {
   function drawFrame() {
     ctx.clearRect(startX, startY, width, canvasHeight);
     ctx.fillRect(startX, startY, width, currentHeight);
-
+    isShootingBeam = true;
     if (isRetreating) {
       currentHeight -= beamSpeed;
       if (currentHeight <= 0) {
@@ -100,10 +105,16 @@ function drawAbductionBeam(ctx, startX, startY, width, canvasHeight) {
       }
     } else {
       currentHeight += beamSpeed;
+
       if (currentHeight >= canvasHeight) {
         currentHeight = canvasHeight;
         canAbduct = true;
-        isRetreating = true; // Start retreating when beam reaches the bottom
+        timer++;
+        if(timer >= beamAbductionTime) {
+          isRetreating = true; // Start retreating when beam reaches the bottom
+          timer = 0;
+          canAbduct = false;
+        }
       }
     }
     requestAnimationFrame(drawFrame);
@@ -117,13 +128,17 @@ ufo.onload = function () {
   drawUfo();
 
   function shootBeam() {
-    drawAbductionBeam(ctx, ufoPosition.x + ufoWidth / 2 - 25, ufoPosition.y + ufoHeight, 50, gamecanvas.height - 280);
-    beamInterval = getRandomInterval(1000, 6000); // Random value between 2 and 6 seconds
-    setTimeout(shootBeam, beamInterval);
-
+    if (!isMoonwalkerDancing) { // Check if Moonwalker is dancing
+      drawAbductionBeam(ctx, ufoPosition.x + (ufoWidth / 2)-15, ufoPosition.y + ufoHeight, beamWidth, gamecanvas.height - 280);
+      beamInterval = getRandomInterval(2000, 6000); // Random interval between 2-6 seconds
+      setTimeout(shootBeam, beamInterval);
+    } else {
+      console.log("Moonwalker is dancing, beam will not shoot.");
+    }
   }
 
   // Initial call to start the beam
+
   shootBeam();
 
   // Start the animation loop

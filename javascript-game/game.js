@@ -3,7 +3,7 @@ import {
     applyFriction
   } from "./input.js";
 
-  import { playerWidth, playerHeight, playerPosition, drawAnimatedPlayerImage } from './guy.js';
+  import { playerWidth, playerHeight, playerPosition, drawAnimatedPlayerImage, drawMoonwalker, isMoonwalkerDancing } from './guy.js';
 
 let canvas = document.getElementById("gameCanvas"); // Set initial value
 let ctx = canvas.getContext("2d");
@@ -151,55 +151,6 @@ function drawStaticPlayerImage() {
   );
 
 }
-// const player2StartFramesX = [0, 90, 180];
-// const player2StartFramesY = [0, 90, 180, 270, 360];
-// function drawAnimatedPlayerImage(x, y) {
-//   // INFO: Clear the drawn image in one frame using the area defined with parameters:
-//   ctx.clearRect(x, y, playerWidth, playerHeight);
-
-//   playerWidth = 60;
-//   playerHeight = 60;
-//   let yIndex;
-//   switch (true) {
-//     case dy < 0:
-//       yIndex = 1;
-//       break;
-//     case dy > 0:
-//       yIndex = 2;
-//       break;
-//     case dx < 0:
-//       yIndex = 3; // Left animation
-//       break;
-//     case dx > 0:
-//       yIndex = 4; // Right animation
-//       break;
-//     default:
-//       yIndex = 0; // Default animation (no movement)
-//       break;
-//   }
-//   ctx.drawImage(
-//     player2,
-//     player2StartFramesX[startFrameIndex],
-//     player2StartFramesY[yIndex],
-//     90,
-//     90,
-//     x,
-//     y,
-//     playerWidth,
-//     playerHeight
-//   );
-
-//   // Create animation on the lower Player:
-//   timer++;
-//   if (timer >= 30) {
-//     timer = 0;
-//     startFrameIndex++;
-//   }
-
-//   if (startFrameIndex == 3) {
-//     startFrameIndex = 0;
-//   }
-// }
 
 // Jos Windowin kokoa muutetaan, päivitetään Height + Width ja logataan ulos tietoa:
 window.addEventListener('resize', function() {
@@ -235,14 +186,7 @@ playerPosition.y += dy;
  if (playerPosition.y < 0) playerPosition.y = 0;
  if (playerPosition.y + playerHeight > canvas.height) playerPosition.y = canvas.height - playerHeight;
 
-// windowFullHeight = alpha;
-//   do {
-//     alpha -= 0.004;
-//   }  while (alpha == 100)
-//     if(alpha <= 0) {
-//       alpha = 100;
-//     }
-    
+
 //drawRain(10, 0.8, `rgba(${playerPosition.x},100,50,${alpha})`);
 
 //drawBullets(10, "rgba(0, 0, 255, 0.8)"); // Blue bullets with fixed alpha
@@ -252,7 +196,12 @@ playerPosition.y += dy;
 
 //drawRain(50, `rgba(135, 206, 235)`); // Rain with dynamic alpha
 
-  drawAnimatedPlayerImage(playerPosition.x, playerPosition.y); // Tämä piirtää täyden anim spritesheetin kohta kohdalta
+
+if(isMoonwalkerDancing) {
+drawMoonwalker(playerPosition.x, playerPosition.y);}
+else {
+drawAnimatedPlayerImage(playerPosition.x, playerPosition.y); // Tämä piirtää täyden anim spritesheetin kohta kohdalta
+}
 
   requestAnimationFrame(updateGame);
 }
