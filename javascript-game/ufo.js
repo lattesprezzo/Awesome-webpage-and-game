@@ -27,7 +27,7 @@ function drawUfo() {
   // Save the context state
   ctx.save();
 
-
+    if(!isShootingBeam) {
     // Update U.F.O. position
     if (movingRight) {
       ufoPosition.x += ufoSpeed;
@@ -40,8 +40,7 @@ function drawUfo() {
         movingRight = true; // Change direction when hitting the left border
       }
     }
-  
-
+  }
   // Flip the image if moving left
   if (!movingRight) {
     ctx.translate(ufocanvas.width, 0);
@@ -59,6 +58,7 @@ function drawUfo() {
 }
 
 function getRandomInterval(min, max) {
+  isShootingBeam = true;
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
@@ -78,42 +78,43 @@ function drawAbductionBeam(ctx, startX, startY, width, canvasHeight) {
     ctx.clearRect(startX, startY, width, canvasHeight);
     ctx.fillRect(startX, startY, width, currentHeight);
 
-
     if (isRetreating) {
       currentHeight -= beamSpeed;
       if (currentHeight <= 0) {
         currentHeight = 0;
         isRetreating = false; // Stop retreating when beam reaches the top
+        isShootingBeam = false;
 
         // setTimeout(() => requestAnimationFrame(drawFrame), beamInterval); // Wait 1.5 seconds before firing again
         return;
       }
     } else {
-
       currentHeight += beamSpeed;
       if (currentHeight >= canvasHeight) {
         currentHeight = canvasHeight;
         isRetreating = true; // Start retreating when beam reaches the bottom
-
       }
     }
-
     requestAnimationFrame(drawFrame);
   }
-
   drawFrame();
 }
 
 // Start the animation once the U.F.O. image is loaded
 ufo.onload = function () {
-  console.log(beamInterval);
+  
   drawUfo();
  
-  setInterval(() => {
+  function shootBeam() {
     drawAbductionBeam(ctx, ufoPosition.x + ufoWidth / 2 - 25, ufoPosition.y + ufoHeight, 50, gamecanvas.height - 280);
-  }, beamInterval); 
-};
+    beamInterval = getRandomInterval(1000, 6000); // Random value between 2 and 6 seconds
+    setTimeout(shootBeam, beamInterval);
+   
+  }
+
+  // Initial call to start the beam
+  shootBeam();
 
 // Start the animation loop
 requestAnimationFrame(drawUfo);
-
+}
