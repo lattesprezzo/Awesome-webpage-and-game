@@ -1,3 +1,6 @@
+
+export { beamCenter, ufoPosition, isShootingBeam, canAbduct };
+
 // Create and initialize the canvas
 let ufocanvas = document.getElementById("ufoCanvas");
 let gamecanvas = document.getElementById("gameCanvas");
@@ -27,7 +30,7 @@ function drawUfo() {
   // Save the context state
   ctx.save();
 
-    if(!isShootingBeam) {
+  if (!isShootingBeam) {
     // Update U.F.O. position
     if (movingRight) {
       ufoPosition.x += ufoSpeed;
@@ -41,6 +44,7 @@ function drawUfo() {
       }
     }
   }
+  
   // Flip the image if moving left
   if (!movingRight) {
     ctx.translate(ufocanvas.width, 0);
@@ -49,7 +53,8 @@ function drawUfo() {
   } else {
     ctx.drawImage(ufo, ufoPosition.x, ufoPosition.y, ufoWidth, ufoHeight);
   }
-
+  ufoBeamStartX = ufoPosition.x;
+  beamCenter = ufoBeamStartX + beamWidth * 0.5;
   // Restore the context state
   ctx.restore();
 
@@ -64,15 +69,19 @@ function getRandomInterval(min, max) {
 
 // Abduction beam
 let beamWidth = 40;
+let ufoBeamStartX;
+let beamCenter;
 let beamInterval;
 let isShootingBeam = false;
+let canAbduct; // When the beam is touching ground
+
 function drawAbductionBeam(ctx, startX, startY, width, canvasHeight) {
   ctx.fillStyle = "rgba(255, 255, 0, 0.5)"; // Yellow with 50% opacity
 
   // Initialize the starting height of the beam
   let currentHeight = 0;
   const beamSpeed = 3;
-  let isRetreating = false;  
+  let isRetreating = false;
 
   function drawFrame() {
     ctx.clearRect(startX, startY, width, canvasHeight);
@@ -84,6 +93,7 @@ function drawAbductionBeam(ctx, startX, startY, width, canvasHeight) {
         currentHeight = 0;
         isRetreating = false; // Stop retreating when beam reaches the top
         isShootingBeam = false;
+        canAbduct = false;
 
         // setTimeout(() => requestAnimationFrame(drawFrame), beamInterval); // Wait 1.5 seconds before firing again
         return;
@@ -92,6 +102,7 @@ function drawAbductionBeam(ctx, startX, startY, width, canvasHeight) {
       currentHeight += beamSpeed;
       if (currentHeight >= canvasHeight) {
         currentHeight = canvasHeight;
+        canAbduct = true;
         isRetreating = true; // Start retreating when beam reaches the bottom
       }
     }
@@ -102,19 +113,19 @@ function drawAbductionBeam(ctx, startX, startY, width, canvasHeight) {
 
 // Start the animation once the U.F.O. image is loaded
 ufo.onload = function () {
-  
+
   drawUfo();
- 
+
   function shootBeam() {
     drawAbductionBeam(ctx, ufoPosition.x + ufoWidth / 2 - 25, ufoPosition.y + ufoHeight, 50, gamecanvas.height - 280);
     beamInterval = getRandomInterval(1000, 6000); // Random value between 2 and 6 seconds
     setTimeout(shootBeam, beamInterval);
-   
+
   }
 
   // Initial call to start the beam
   shootBeam();
 
-// Start the animation loop
-requestAnimationFrame(drawUfo);
+  // Start the animation loop
+  requestAnimationFrame(drawUfo);
 }
