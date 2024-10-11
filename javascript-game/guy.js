@@ -51,18 +51,28 @@ function controlPlayerX(positionX) {
     return positionX;
   }
 }
-
 function drawWithShadow(x) {
   const screenWidth = canvas.width;
   const leftMargin = 40; // Margin for the left side
-  const rightMargin = 120; // Margin for the right side
+  const rightMargin = 160; // Margin for the right side
 
-  if (x < leftMargin || x > screenWidth - rightMargin) {
-    ctx.filter = 'brightness(0.3)'; // Apply shadow effect
+  // Calculate distance to the nearest edge
+  let distanceToEdge;
+
+  if (x < leftMargin) {
+    distanceToEdge = x / (leftMargin);
+
+  } else if (x > screenWidth - rightMargin) {
+    distanceToEdge = (screenWidth - x) / (rightMargin * 1.4);
+    
   } else {
-    ctx.filter = 'none'; // Remove shadow effect
+    distanceToEdge = 1;
   }
+  // Calculate brightness
+  let brightness = 0.2 + 0.8 * distanceToEdge; // Values range from 0.2 (full shadow) to 1 (no shadow)
+  ctx.filter = `brightness(${brightness})`;
 }
+
 
 
 function drawAnimatedPlayerImage(x, y) {
@@ -82,7 +92,7 @@ function drawAnimatedPlayerImage(x, y) {
       yIndex = 0; // Left animation
       if (player.src !== guyAnimationList.walkLeft) {
         player.src = guyAnimationList.walkLeft;
-      
+
       }
       break;
     case dx > 0.01:
@@ -98,7 +108,7 @@ function drawAnimatedPlayerImage(x, y) {
     default:
 
       isMoving = false;
-      
+
       yIndex = 0; // Default animation (no movement)
       startFrameIndex = 0;
       if (player.src !== guyAnimationList.idleLeft) {

@@ -38,8 +38,8 @@ body, html {
 }
 
 #gameCanvas {
-  width: 500px; /* set the desired width */
-  height: 400px; /* set the desired height */
+  width: 0; /* Set in Javascript.js on page load */
+  height: 0; /* Set in Javascript.js on page load */
   border: 3px solid black;
   background-image: url(/images/background-images/forest.jpeg);
   /* background-color: rgba(133, 11, 11, 0.5); */
@@ -47,14 +47,15 @@ body, html {
 }
 
 #ufoCanvas {
-  width: 500px;
-  height: 200px;
+  width: 0;
+  height: 0;
   background-color: transparent;
-  z-index: 3;
+  z-index: 4;
   position: absolute;
   top: 0; /* keep it at the top */
   left: 50%;
   transform: translateX(-50%);
+  border: 3px solid black;
 }
 #frontCanvas {
 	width: 1024px;
@@ -62,7 +63,7 @@ body, html {
 	/* background-color: rgba(133, 11, 11, 0.5); */
   background-image: url(/images/background-images/trees-front.png);
 	/* background: linear-gradient(rgba(0, 0, 0, 0), rgba(12, 13, 28, 0)), url(/images/background-images/trees-front.png); */
-	z-index: 4;
+	z-index: 2;
 	position: absolute;
 	top: 50.5%;
 	left: 50%;
