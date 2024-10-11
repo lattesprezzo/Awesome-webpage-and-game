@@ -24,9 +24,9 @@ let lookingLeft = true;
 let hasBeenAbducted = false;
 
 const guyAnimationList = {
-  walkLeft: "/images/animations/guy-walk-left.png",
-  walkRight: "/images/animations/guy-walk-right.png",
-  idleLeft: "/images/animations/guy-idle-left.png"
+  walkLeft: "./images/animations/guy-walk-left.png",
+  walkRight: "./images/animations/guy-walk-right.png",
+  idleLeft: "./images/animations/guy-idle-left.png"
 };
 
 let canvas = document.getElementById("gameCanvas"); // Set initial value
@@ -37,7 +37,7 @@ player.src = guyAnimationList.idleLeft;
 
 // Moonwalker
 const moonWalker = new Image();
-moonWalker.src = "/images/animations/moonwalker-spritesheet.png";
+moonWalker.src = "./images/animations/moonwalker-spritesheet.png";
 let isMoonwalkerDancing = false;
 let playerWidth = 100;
 let playerHeight = 192;

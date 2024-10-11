@@ -23,8 +23,8 @@ canvas.height = 400;
 // const player = new Image();
 // player.src = "player.png";
 
-const player = new Image(); // Create fully animated element
-player.src = "animations-full.png";
+// const player = new Image(); // Create fully animated element
+// player.src = "animations-full.png";
 
 // ..................BULLETS................. //
 

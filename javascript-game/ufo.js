@@ -11,7 +11,7 @@ let ctx = ufocanvas.getContext("2d");
 
 // Create the U.F.O. image
 const ufo = new Image();
-ufo.src = "/images/objects/ufo.png";
+ufo.src = "./images/objects/ufo.png";
 
 // Set initial U.F.O. properties
 let ufoWidth = 120;

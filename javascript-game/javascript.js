@@ -30,7 +30,7 @@ window.addEventListener('load', function() {
     var frontcanvas = this.document.getElementById('frontCanvas');
 
     var bgImage = new Image();
-    bgImage.src ='/images/background-images/forest.jpeg'; 
+    bgImage.src ='./images/background-images/forest.jpeg'; 
 
     bgImage.onload = function() {
         wrapperdiv.style.height = bgImage.height + 'px'; // Change width to height
