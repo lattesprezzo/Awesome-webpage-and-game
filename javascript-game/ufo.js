@@ -5,9 +5,17 @@ import { isMoonwalkerDancing } from "./guy.js"
 // Create and initialize the canvas
 let ufocanvas = document.getElementById("ufoCanvas");
 let gamecanvas = document.getElementById("gameCanvas");
-ufocanvas.width = 500; // Set canvas width
-ufocanvas.height = 200; // Set canvas height
 let ctx = ufocanvas.getContext("2d");
+
+// Resize the canvas based on window size
+function resizeUfoCanvas() {
+    ufocanvas.width = window.innerWidth;
+    ufocanvas.height = window.innerHeight;
+}
+
+// Call resizeUfoCanvas on window resize and on page load
+window.addEventListener('resize', resizeUfoCanvas);
+window.addEventListener('load',  resizeUfoCanvas);
 
 // Create the U.F.O. image
 const ufo = new Image();
@@ -126,7 +134,7 @@ function drawAbductionBeam(ctx, startX, startY, width, canvasHeight) {
 ufo.onload = function () {
 
   drawUfo();
-
+  resizeUfoCanvas();
   function shootBeam() {
     if (!isMoonwalkerDancing) { // Check if Moonwalker is dancing
       drawAbductionBeam(ctx, ufoPosition.x + (ufoWidth / 2)-15, ufoPosition.y + ufoHeight, beamWidth, gamecanvas.height - 280);

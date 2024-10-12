@@ -4,7 +4,6 @@ body, html {
   width: 100vw;
   height: 100vh;
   overflow: hidden;
- 
   display: flex;
   align-items: center;
   justify-content: center;
@@ -17,8 +16,6 @@ body, html {
   display: flex;
   align-items: center;
   justify-content: center;
-
-  /* background-color: rgb(14, 38, 56); */
 }
 
 #wrapperDiv {
@@ -38,12 +35,10 @@ body, html {
 }
 
 #gameCanvas {
-  width: 0; /* Set in Javascript.js on page load */
-  height: 0; /* Set in Javascript.js on page load */
+  width: 0;
+  height: 0;
   border: 3px solid black;
   background-image: url(./images/background-images/forest.jpeg);
-  /* background-color: rgba(133, 11, 11, 0.5); */
-  /* background: linear-gradient(rgba(0, 0, 0, 0), rgba(12, 13, 28, 0)), url(/images/background-images/forest.jpeg); */
 }
 
 #ufoCanvas {
@@ -51,34 +46,30 @@ body, html {
   height: 0;
   background-color: transparent;
   z-index: 4;
-  position: absolute;
-  top: 0; /* keep it at the top */
+  top: 0;
   left: 50%;
   transform: translateX(-50%);
   border: 3px solid black;
 }
-#frontCanvas {
-	width: 1024px;
-	height: 1024px;
-	/* background-color: rgba(133, 11, 11, 0.5); */
-  background-image: url(./images/background-images/trees-front.png);
-	/* background: linear-gradient(rgba(0, 0, 0, 0), rgba(12, 13, 28, 0)), url(/images/background-images/trees-front.png); */
-	z-index: 2;
-	position: absolute;
-	top: 50.5%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-}
-#maindiv:hover {
 
+#frontCanvas {
+  width: 1024px;
+  height: 1024px;
+  background-image: url(./images/background-images/trees-front.png);
+  z-index: 2;
+  position: absolute;
+  top: 50.5%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#maindiv:hover {
   background-color: rgb(6, 18, 27);
-/* background: linear-gradient(rgb(25, 47, 155), rgb(57, 57, 109)); */
   transition: background 1000ms ease-in-out;
 }
 
 #maindiv:not(:hover) {
   background-color: rgb(14, 38, 56);
-  /* background: linear-gradient(rgb(25, 47, 155), rgb(11, 11, 31)); */
   transition: background 1000ms ease-in-out;
 }
 
@@ -95,9 +86,45 @@ button:hover {
   transition: border 1000ms ease-in-out;
 }
 
-/* In case we need to add some effect to the whole game canvas */
 #gameCanvas.shadow {
   filter: brightness(0.3);
-  transition: filter 0.5s ease; /* Adjust the duration and easing here */
+  transition: filter 0.5s ease;
 }
+@media (max-width: 768px) {
+  #gameCanvas {
+      background-image: url(./images/background-images/forest-mobile.jpg);
+      background-size: cover; /* Ensure the background image covers the entire canvas */
+      background-position: center; /* Center the background image */
+      background-repeat: no-repeat; /* Prevent background image from repeating */
+  }
 
+  #wrapperDiv, 
+  #gameCanvas, 
+  #ufoCanvas, 
+  #frontCanvas {
+      width: 100vw;
+      height: 100vh;
+      border: none;
+      box-sizing: border-box; /* Ensure padding and border are included in element's total width and height */
+  }
+  
+
+  
+  #ufoCanvas {
+      top: 0; 
+      left: 50%;
+      transform: translateX(-50%);
+  }
+  
+  #frontCanvas {
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+  }
+  
+
+  #maindiv:hover,
+  #maindiv:not(:hover) {
+      background: none;
+  }
+}

@@ -5,12 +5,26 @@ import {
 
   import { playerWidth, playerHeight, playerPosition, drawAnimatedPlayerImage, drawMoonwalker, isMoonwalkerDancing } from './guy.js';
 
-let canvas = document.getElementById("gameCanvas"); // Set initial value
-let ctx = canvas.getContext("2d");
+  let canvas = document.getElementById("gameCanvas"); // Set initial value
+  let ctx = canvas.getContext("2d");
+  
+  // Resize the canvas based on window size
+  function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+  }
+  
+  // Call resizeCanvas on window resize and on page load
+  window.addEventListener('resize', resizeCanvas);
+  window.addEventListener('load', resizeCanvas);
+  
+
+  resizeCanvas(); // Initial resize
+  
 
 // Default H and W are 150px x 300px so set custom size here:
-canvas.width = 500;
-canvas.height = 400;
+//canvas.width = 500;
+//canvas.height = 400;
 // Max out:
 //canvas.width = window.innerWidth;
 //canvas.height = window.innerHeight;

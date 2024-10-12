@@ -49,7 +49,7 @@ let playerBrightness;
 // Player startposition
 const playerPosition = {
   x: canvas.width,
-  y: 271
+  y: 0
 };
 
 function frameControl(lookingLeft) {
