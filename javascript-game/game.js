@@ -209,7 +209,7 @@ playerPosition.y += dy;
 if(isMoonwalkerDancing) {
 drawMoonwalker(playerPosition.x, playerPosition.y);}
 else {
-drawAnimatedPlayerImage(playerPosition.x, playerPosition.y); // Tämä piirtää täyden anim spritesheetin kohta kohdalta
+// INFO: drawAnimatedPlayerImage(playerPosition.x, playerPosition.y); // Tämä piirtää täyden anim spritesheetin kohta kohdalta
 }
 
   requestAnimationFrame(updateGame);
