@@ -41,6 +41,18 @@ body, html {
   background-image: url(./images/background-images/forest.jpeg);
 }
 
+#groundCanvas {
+	position: absolute;
+	display: block;
+	width: 1024px;
+	height: 160px;
+	bottom: 0;
+	left: 50%;
+	transform: translate(-50%, 0);
+	background-color: green;
+	z-index: 6;
+}
+
 #ufoCanvas {
   width: 0;
   height: 0;
@@ -90,6 +102,9 @@ button:hover {
   filter: brightness(0.3);
   transition: filter 0.5s ease;
 }
+
+/* ---------- MOBILE ----------- */
+
 @media (max-width: 768px) {
   #gameCanvas {
       background-image: url(./images/background-images/forest-mobile.jpg);
@@ -102,13 +117,10 @@ button:hover {
   #gameCanvas, 
   #ufoCanvas, 
   #frontCanvas {
-      width: 100vw;
-      height: 100vh;
+
       border: none;
       box-sizing: border-box; /* Ensure padding and border are included in element's total width and height */
   }
-  
-
   
   #ufoCanvas {
       top: 0; 
@@ -120,9 +132,9 @@ button:hover {
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
+      border: 3px solid red;
   }
   
-
   #maindiv:hover,
   #maindiv:not(:hover) {
       background: none;

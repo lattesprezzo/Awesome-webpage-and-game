@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", function() {
     htmlElm.style.display = "none";
     gamecanvas.style.display = "none";
     frontcanvas.style.display = "none";
-    ufocanvas.style.display = "none"; 
+    ufocanvas.style.display = "none";
 
     // Display all elements once the DOM is fully loaded
     htmlElm.style.display = "block";
@@ -41,6 +41,35 @@ document.addEventListener("DOMContentLoaded", function() {
                 frontcanvas.style.width = bgImage.width + 'px';
                 frontcanvas.style.height = bgImage.height + 'px';
             }
+
+           // let windowFullHeight = (gamecanvas.height/window.innerHeight)*100; // Normalize canvas height to 100%
         };
     });
 });
+
+
+//   // Resize the canvas based on window size
+//   function resizeCanvas() {
+//     var gamecanvas = document.getElementById('gameCanvas');
+//     gamecanvas.width = window.innerWidth;
+//     gamecanvas.height = window.innerHeight;
+// }
+
+// // Call resizeCanvas on window resize and on page load
+// window.addEventListener('resize', resizeCanvas);
+// //window.addEventListener('load', resizeCanvas);
+
+
+// resizeCanvas(); // Initial resize
+
+// // Jos Windowin kokoa muutetaan, päivitetään Height + Width ja logataan ulos tietoa:
+// window.addEventListener('resize', function() {
+//     //canvas.height = window.innerHeight * 0.6;
+//    // canvas.width = window.innerWidth * 0.6;
+//    var gamecanvas = document.getElementById('gameCanvas');
+
+//     console.log("Windows resized. New dimensions: " + "H: " + gamecanvas.height + " X: " + gamecanvas.width);
+
+
+//   });
+  

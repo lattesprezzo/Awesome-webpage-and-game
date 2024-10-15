@@ -5,21 +5,23 @@ import {
 
   import { playerWidth, playerHeight, playerPosition, drawAnimatedPlayerImage, drawMoonwalker, isMoonwalkerDancing } from './guy.js';
 
+
+  
   let canvas = document.getElementById("gameCanvas"); // Set initial value
   let ctx = canvas.getContext("2d");
   
-  // Resize the canvas based on window size
-  function resizeCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-  }
+  // // Resize the canvas based on window size
+  // function resizeCanvas() {
+  //     canvas.width = window.innerWidth;
+  //     canvas.height = window.innerHeight;
+  // }
   
-  // Call resizeCanvas on window resize and on page load
-  window.addEventListener('resize', resizeCanvas);
-  window.addEventListener('load', resizeCanvas);
+  // // Call resizeCanvas on window resize and on page load
+  // window.addEventListener('resize', resizeCanvas);
+  // window.addEventListener('load', resizeCanvas);
   
 
-  resizeCanvas(); // Initial resize
+  // resizeCanvas(); // Initial resize
   
 
 // Default H and W are 150px x 300px so set custom size here:
@@ -166,14 +168,7 @@ function drawStaticPlayerImage() {
 
 }
 
-// Jos Windowin kokoa muutetaan, päivitetään Height + Width ja logataan ulos tietoa:
-window.addEventListener('resize', function() {
-  //canvas.height = window.innerHeight * 0.6;
- // canvas.width = window.innerWidth * 0.6;
-  console.log("Windows resized. New dimensions: " + "H: " + canvas.height + " X: " + canvas.width);
-});
 
-let windowFullHeight = (canvas.height/window.innerHeight)*100; // Normalize canvas height to 100%
 
 // ......... Game loop .......... //
 
