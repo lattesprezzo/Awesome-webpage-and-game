@@ -3,9 +3,13 @@ import {
     applyFriction
   } from "./input.js";
 
-  import { playerWidth, playerHeight, playerPosition, drawAnimatedPlayerImage, drawMoonwalker, isMoonwalkerDancing } from './guy.js';
+  import { playerWidth, playerHeight, 
+    playerPosition, drawAnimatedPlayerImage, 
+    drawMoonwalker, isMoonwalkerDancing } from './guy.js';
 
-
+  import {
+    createGameOverButton
+  } from './buttons.js';
   
   let canvas = document.getElementById("gameCanvas"); // Set initial value
   let ctx = canvas.getContext("2d");
@@ -51,22 +55,22 @@ let bulletSpeed = 2;
 let playerXsnapshot = playerPosition.x;// Start once here. Game update will take care of the following loops
 // and updates the Snapshot to the playerPosition.x current value.
 
-function drawBullets(startX, color) {
-ctx.beginPath();
-ctx.rect(startX,bulletY,10,10);
-ctx.fillStyle = color;
-ctx.fill();
-ctx.closePath();
+// function drawBullets(startX, color) {
+// ctx.beginPath();
+// ctx.rect(startX,bulletY,10,10);
+// ctx.fillStyle = color;
+// ctx.fill();
+// ctx.closePath();
 
-// Start from the top again
-if(bulletY >= canvas.height) {
-    bulletY = playerPosition.y;
-    playerXsnapshot = playerPosition.x;
+// // Start from the top again
+// if(bulletY >= canvas.height) {
+//     bulletY = playerPosition.y;
+//     playerXsnapshot = playerPosition.x;
     
-}
-startX = playerXsnapshot;
-bulletY+=bulletSpeed;
-}
+// }
+// startX = playerXsnapshot;
+// bulletY+=bulletSpeed;
+// }
 
 // .............. RAIN .............. //
 
@@ -168,8 +172,6 @@ function drawStaticPlayerImage() {
 
 }
 
-
-
 // ......... Game loop .......... //
 
 function updateGame() {
@@ -195,7 +197,6 @@ playerPosition.y += dy;
  if (playerPosition.y < 0) playerPosition.y = 0;
  if (playerPosition.y + playerHeight > canvas.height) playerPosition.y = canvas.height - playerHeight;
 
-
 //drawRain(10, 0.8, `rgba(${playerPosition.x},100,50,${alpha})`);
 
 //drawBullets(10, "rgba(0, 0, 255, 0.8)"); // Blue bullets with fixed alpha
@@ -205,14 +206,13 @@ playerPosition.y += dy;
 
 //drawRain(50, `rgba(135, 206, 235)`); // Rain with dynamic alpha
 
-
 if(isMoonwalkerDancing) {
 drawMoonwalker(playerPosition.x, playerPosition.y);}
 else {
-// INFO: drawAnimatedPlayerImage(playerPosition.x, playerPosition.y); // Tämä piirtää täyden anim spritesheetin kohta kohdalta
+drawAnimatedPlayerImage(playerPosition.x, playerPosition.y); // Tämä piirtää täyden anim spritesheetin kohta kohdalta
 }
-
   requestAnimationFrame(updateGame);
+  createGameOverButton();
 }
 requestAnimationFrame(updateGame);
 

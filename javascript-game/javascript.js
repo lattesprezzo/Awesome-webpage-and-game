@@ -56,11 +56,11 @@ function logDimensions() {
     const frontCanvas = document.getElementById('frontCanvas');
     const groundCanvas = document.getElementById('groundCanvas');
 
-    console.log(`wrapperDiv: Width = ${wrapperDiv.style.width}, Height = ${wrapperDiv.style.height}`);
-    console.log(`gameCanvas: Width = ${gameCanvas.style.width}, Height = ${gameCanvas.style.height}`);
-    console.log(`ufoCanvas: Width = ${ufoCanvas.style.width}, Height = ${ufoCanvas.style.height}`);
-    console.log(`frontCanvas: Width = ${frontCanvas.style.width}, Height = ${frontCanvas.style.height}`);
-    console.log(`groundCanvas: Width = ${groundCanvas.style.width}, Height = ${groundCanvas.style.height}`);
+    // console.log(`wrapperDiv: Width = ${wrapperDiv.style.width}, Height = ${wrapperDiv.style.height}`);
+    // console.log(`gameCanvas: Width = ${gameCanvas.style.width}, Height = ${gameCanvas.style.height}`);
+    // console.log(`ufoCanvas: Width = ${ufoCanvas.style.width}, Height = ${ufoCanvas.style.height}`);
+    // console.log(`frontCanvas: Width = ${frontCanvas.style.width}, Height = ${frontCanvas.style.height}`);
+    // console.log(`groundCanvas: Width = ${groundCanvas.style.width}, Height = ${groundCanvas.style.height}`);
 }
 
 logDimensions();

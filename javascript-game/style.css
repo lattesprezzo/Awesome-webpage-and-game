@@ -8,7 +8,13 @@ body, html {
   align-items: center;
   justify-content: center;
 }
-
+#gameCanvas, #ufoCanvas, #buttonsCanvas, #gameOverCanvas, #frontCanvas, #groundCanvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1024px;
+  height:1024px;
+}
 #maindiv {
 	position: relative;
 	width: 100vw;
@@ -45,11 +51,11 @@ body, html {
 	position: absolute;
 	display: block;
 	width: 0;
-	height: 160px;
+	height: 0;
 	bottom: 0;
 	left: 50%;
 	transform: translate(-50%, 0);
-	background-color: green;
+	background-color: none;
 	z-index: 6;
 }
 
@@ -74,6 +80,33 @@ body, html {
   left: 50%;
   transform: translate(-50%, -50%);
 }
+#buttonsCanvas {
+  width: 350px;
+  height: 200px;
+  background-color: transparent;
+  z-index: 4;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+    transition: background-color 0.3s ease, border 0.3s ease;
+}
+
+#gameOverCanvas {
+  background-color: transparent;
+  z-index: 4;
+  border: none;
+
+}
+
+#buttonsCanvas:hover {
+  background-color: rgba(0, 0, 0, 0.5); /* Change background color on hover */
+  border: 2px solid white; /* Add a white border on hover */
+}
 
 #maindiv:hover {
   background-color: rgb(6, 18, 27);
@@ -85,13 +118,7 @@ body, html {
   transition: background 1000ms ease-in-out;
 }
 
-button {
-  width: 100px;
-  height: 50px;
-  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-  left: 50%;
-  position: absolute;
-}
+
 
 button:hover {
   border: 4px solid red;

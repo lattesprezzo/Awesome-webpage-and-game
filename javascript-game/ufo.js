@@ -7,6 +7,7 @@ let ufocanvas = document.getElementById("ufoCanvas");
 let ctx = ufocanvas.getContext("2d");
 let groundcanvas = document.getElementById("groundCanvas");
 
+
 // Create the U.F.O. image
 const ufo = new Image();
 ufo.src = "./images/objects/ufo.png";
@@ -64,14 +65,13 @@ function drawUfo() {
 
 function getRandomInterval(min, max) {
  
-  return Math.floor(Math.random() * (max - min + 1) + min);
+  return Math.floor(Math.random() * (max - min) + min);
 }
 
 // Abduction beam
 let beamWidth = 20;
 let ufoBeamStartX;
 let ufoBeamStartY = ufoPosition.y + ufoHeight;
-let ufoBeamStop = groundcanvas.canvasHeight;
 let beamCenter;
 let beamInterval;
 let isShootingBeam = false;
@@ -82,67 +82,72 @@ let timer = 0;
   // Initialize the starting height of the beam
   let currentHeight = 0;
 
-function drawAbductionBeam(ctx, startX, startY, width, canvasHeight) {
+function AbductionBeam(ctx, startX, startY, width, maxBeamHeight) {
 
   ctx.fillStyle = "rgba(255, 255, 0, 0.5)"; // Yellow with 50% opacity
 
   const beamSpeed = 3;
   let isRetreating = false;
 
-  function drawFrame() {
+  function drawBeamFrame() {
     
-    ctx.clearRect(startX, startY, width, canvasHeight);
-    ctx.fillRect(startX, startY, width, currentHeight);
-    isShootingBeam = true;
-    if (isRetreating) {
-      currentHeight -= beamSpeed;
-      if (currentHeight <= 0) {
-        currentHeight = 0;
-        isRetreating = false; // Stop retreating when beam reaches the top
-        isShootingBeam = false;
-        canAbduct = false;
+    ctx.clearRect(startX, startY, width, maxBeamHeight); // Clear the entire beam area
 
-        // setTimeout(() => requestAnimationFrame(drawFrame), beamInterval); // Wait 1.5 seconds before firing again
-        return;
-      }
+    // Draw the beam
+    ctx.fillRect(startX, startY, width, currentHeight); // Adjust Y position based on currentHeight
+    isShootingBeam = true;
+
+    if (isRetreating) {
+        currentHeight -= beamSpeed;
+        if (currentHeight < 0) {
+            currentHeight = 0; // Stop at U.F.O bottom
+            isRetreating = false; // Stop retreating when the beam reaches the top
+            isShootingBeam = false;
+            canAbduct = false; // This is true for a while when the beam is touching the ground
+            ctx.clearRect(startX-5, startY, width+10, maxBeamHeight); // Clear the entire beam area
+            return;
+        }
     } else {
-      currentHeight += beamSpeed;
-        // Beam reaches ground
-      if (currentHeight >= 10) {
-        currentHeight = 50;
-        canAbduct = true;
-        timer++;
-        if(timer >= beamAbductionTime) {
-          isRetreating = true; // Start retreating when beam reaches the bottom
-          timer = 0;
-          canAbduct = false;
+        currentHeight += beamSpeed;
+        if (currentHeight > maxBeamHeight) {        // Beam reaches ground
+            currentHeight = maxBeamHeight; // Stabilize and lock the beam
+            canAbduct = true;
+            timer++;
+            if (timer >= beamAbductionTime) {
+                isRetreating = true; // Start retreating when beam reaches the bottom
+                timer = 0;
+                canAbduct = false;
         }
       }
     }
-    requestAnimationFrame(drawFrame);
+     requestAnimationFrame(drawBeamFrame);
+    
   }
-  drawFrame();
+   drawBeamFrame();
+
+
 }
 
 // Start the animation once the U.F.O. image is loaded
 ufo.onload = function () {
-
   drawUfo();
-
-  function shootBeam() {
+  function launchBeam() {
     if (!isMoonwalkerDancing) { // Check if Moonwalker is not dancing
-      drawAbductionBeam(ctx, ufoPosition.x + (ufoWidth / 2)-15, ufoBeamStartY, beamWidth, 1024);
-      beamInterval = getRandomInterval(1000, 2000); // Random interval between 2-6 seconds
-      setTimeout(shootBeam, beamInterval);
+      AbductionBeam(ctx, ufoPosition.x + (ufoWidth / 2)-11, ufoBeamStartY, beamWidth, groundcanvas.height-63);
+      beamInterval = getRandomInterval(2500, 6000); // Random interval between 2-6 seconds
+      setTimeout(launchBeam, beamInterval);
     } else {
       console.log("Moonwalker is dancing, beam will not shoot.");
     }
   }
 
   // Initial call to start the beam
+  launchBeam();
 
-  shootBeam();
+  
+  
 
   // Start the animation loop
   requestAnimationFrame(drawUfo);
+  
 }
