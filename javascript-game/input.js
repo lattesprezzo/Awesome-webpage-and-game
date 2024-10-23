@@ -8,19 +8,6 @@ export const acceleration = 0.9;
 export const maxSpeed = 1.2;
 export let friction = 0.8; // Friction factor for gradual deceleration
 
-
-// Function to handle keydown events
-// function handleKeyDown(event) {
-//   if (event.key === "ArrowUp") {
-//     dy -= acceleration;
-//   } else if (event.key === "ArrowDown") {
-//     dy += acceleration;
-//   } else if (event.key === "ArrowLeft") {
-//     dx -= acceleration;
-//   } else if (event.key === "ArrowRight") {
-//     dx += acceleration;
-//   }
-// }
 // Function to handle keydown events
 function handleKeyDown(event) {
 
