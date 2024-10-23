@@ -9,80 +9,25 @@ body, html {
   justify-content: center;
   background-color: rgb(17, 42, 57);
 }
-#gameCanvas, #ufoCanvas, #buttonsCanvas, #gameOverCanvas, #frontCanvas, #groundCanvas {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 1024px;
-  height:1024px;
-}
+
 #maindiv {
-	position: relative;
-	width: 600px;
-	height: 600px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
+  position: relative;
+  width: 600px;
+  height: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border: 3px solid rgb(0, 0, 0);
   background-color: rgb(17, 42, 33);
 }
 
-#wrapperDiv {
-  position: relative;
-  width: 0;
-  height: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-#gameCanvas, #ufoCanvas {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
 #gameCanvas {
-  width: 0;
-  height: 0;
-  border: 3px solid rgb(0, 0, 0);
-
-}
-
-#groundCanvas {
-	position: absolute;
-	display: block;
-	width: 0;
-	height: 0;
-	bottom: 0;
-	left: 50%;
-	transform: translate(-50%, 0);
-	background-color: none;
-	z-index: 6;
-}
-
-#ufoCanvas {
-  width: 0;
-  height: 0;
-  background-color: transparent;
-  z-index: 4;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  border: 3px solid black;
-}
-
-#frontCanvas {
-  width: 0;
-  height: 0;
-  background-image: url(./images/background-images/trees-front.png);
-  z-index: 2;
   position: absolute;
-  top: 50.5%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  width: auto;
+  height: 600px; 
+  border: 3px solid rgb(255, 255, 255);
 }
+
 #buttonsCanvas {
   width: 350px;
   height: 200px;
