@@ -1,4 +1,4 @@
-const buttonsCanvas = document.getElementById("buttonsCanvas");
+const buttonsCanvas = document.getElementById("gameCanvas");
 const ctx = buttonsCanvas.getContext("2d");
 
 export function createGameOverButton() {

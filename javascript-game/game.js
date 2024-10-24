@@ -1,5 +1,5 @@
 import { dx, dy, direction, applyFriction } from "./input.js";
-
+import { createGameOverButton } from "./buttons.js";
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
@@ -53,7 +53,6 @@ function moveBox() {
       break;
   }
   // Add the new head to the snake's body
-
   snake.body.unshift(head);
     console.log(head.x + " " + head.y);
     console.log("Food location: " + food.x + " " + food.y);
@@ -93,6 +92,8 @@ function checkCollision(snakeHead, food) {
 }
 
 function update() {
+
+  createGameOverButton();
   // Apply friction to dx and dy
   applyFriction();
   drawBox();
